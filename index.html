@@ -532,6 +532,7 @@
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       typed.textContent = roles[0];
+      
     } else {
       var ri = 0, ci = 0, del = false;
       (function tick() {
