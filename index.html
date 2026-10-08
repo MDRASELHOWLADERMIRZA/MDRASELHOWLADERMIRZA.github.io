@@ -67,10 +67,11 @@
     nav { display: flex; align-items: center; justify-content: space-between; height: 68px; }
     .logo { font-weight: 800; font-size: 1.15rem; letter-spacing: -.02em; display: flex; align-items: center; gap: 10px; }
     .logo-mark {
-      width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center;
+      width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
       background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #fff; font-size: .85rem; font-weight: 800;
+      color: #fff; font-size: .85rem; font-weight: 800; overflow: hidden; flex-shrink: 0;
     }
+    .logo-mark img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .nav-links { display: flex; align-items: center; gap: 6px; }
     .nav-links a {
       padding: 8px 14px; border-radius: 9px; font-size: .92rem; font-weight: 500;
@@ -122,6 +123,7 @@
       -webkit-mask-image: radial-gradient(ellipse at 50% 30%, #000 10%, transparent 70%);
     }
     .hero .container { position: relative; z-index: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+    .status-group { display: flex; flex-wrap: wrap; gap: 10px; }
     .status {
       display: inline-flex; align-items: center; gap: 10px; padding: 7px 15px; border-radius: 999px;
       background: var(--surface); border: 1px solid var(--border); font-size: .84rem; font-weight: 600;
@@ -184,6 +186,11 @@
     }
     .fact small { display: block; color: var(--muted); font-size: .78rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
     .fact strong { display: block; margin-top: 4px; font-size: 1.02rem; }
+    .about-portrait {
+      border-radius: 18px; overflow: hidden; border: 1px solid var(--border); box-shadow: var(--shadow);
+      background: var(--surface); aspect-ratio: 4 / 5;
+    }
+    .about-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* Cards */
     .card {
@@ -204,6 +211,50 @@
       padding: 5px 12px; border-radius: 8px; font-size: .8rem; font-weight: 600;
       background: var(--bg-alt); color: var(--muted); border: 1px solid var(--border);
     }
+
+    /* Experience (timeline) */
+    .timeline { position: relative; display: grid; gap: 28px; }
+    .timeline::before {
+      content: ""; position: absolute; left: 23px; top: 10px; bottom: 10px; width: 2px;
+      background: linear-gradient(var(--border), var(--border));
+    }
+    .timeline-item { position: relative; display: grid; grid-template-columns: 48px 1fr; gap: 20px; }
+    .timeline-dot {
+      width: 48px; height: 48px; border-radius: 50%; background: var(--surface); border: 1px solid var(--border);
+      display: grid; place-items: center; box-shadow: var(--shadow); z-index: 1; color: var(--accent);
+    }
+    .timeline-dot svg { width: 20px; height: 20px; }
+    .timeline-item.current .timeline-dot { background: var(--accent-soft); border-color: var(--accent); }
+    .timeline-card { padding: 24px 26px; }
+    .timeline-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+    .timeline-head h3 { font-size: 1.08rem; letter-spacing: -.01em; }
+    .timeline-period {
+      font-size: .78rem; font-weight: 700; letter-spacing: .04em; color: var(--accent);
+      background: var(--accent-soft); padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+    }
+    .timeline-org { margin-top: 3px; color: var(--muted); font-size: .92rem; font-weight: 600; }
+    .timeline-card ul { margin-top: 14px; display: grid; gap: 9px; }
+    .timeline-card li { position: relative; padding-left: 20px; color: var(--muted); font-size: .93rem; }
+    .timeline-card li::before {
+      content: ""; position: absolute; left: 0; top: .55em; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent-2);
+    }
+
+    /* Education */
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .edu-card { display: flex; flex-direction: column; gap: 14px; }
+    .edu-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .edu-degree { font-size: 1.04rem; font-weight: 700; letter-spacing: -.01em; }
+    .edu-major { margin-top: 4px; color: var(--muted); font-size: .9rem; }
+    .edu-school { font-size: .92rem; color: var(--text); font-weight: 600; }
+
+    .training-list { margin-top: 36px; }
+    .training-list .head-sub { font-size: 1.05rem; font-weight: 700; margin-bottom: 18px; letter-spacing: -.01em; }
+    .training-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+    .training-card { padding: 20px 22px; }
+    .training-card h4 { font-size: .98rem; font-weight: 700; }
+    .training-card .t-org { margin-top: 5px; color: var(--muted); font-size: .86rem; }
+    .training-card .t-meta { margin-top: 10px; font-size: .78rem; font-weight: 600; color: var(--accent); }
 
     /* Services */
     .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
@@ -279,9 +330,11 @@
   <header>
     <div class="container">
       <nav>
-        <a href="#home" class="logo"><span class="logo-mark">RH</span>Rasel Howlader</a>
+        <a href="#home" class="logo"><span class="logo-mark"><img src="assets/profile-avatar.jpg" alt="Md. Rasel Howlader"></span>Rasel Howlader</a>
         <ul class="nav-links" id="navLinks">
           <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#education">Education</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#projects">Projects</a></li>
@@ -305,7 +358,11 @@
     <section class="hero" id="home">
       <div class="container">
         <div>
-          <span class="status reveal"><span class="dot"></span>Open to remote opportunities</span>
+          <div class="status-group reveal">
+            <span class="status"><span class="dot"></span>Open to Remote</span>
+            <span class="status"><span class="dot"></span>Open to Part-time</span>
+            <span class="status"><span class="dot"></span>Open to Freelance</span>
+          </div>
           <h1 class="reveal d1">Hi, I'm <span class="grad">Md. Rasel Howlader</span></h1>
           <p class="role reveal d2"><b id="typed"></b><span class="caret"></span></p>
           <p class="lead reveal d3">
@@ -371,9 +428,151 @@
             </p>
           </div>
           <div class="facts">
+            <div class="about-portrait reveal">
+              <img src="assets/profile-portrait.jpg" alt="Md. Rasel Howlader">
+            </div>
             <div class="fact reveal d1"><small>Role</small><strong>Software Engineer</strong></div>
             <div class="fact reveal d2"><small>Focus</small><strong>.NET Backend Development</strong></div>
             <div class="fact reveal d3"><small>Currently learning</small><strong>React, Azure &amp; Docker</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+      <div class="container">
+        <div class="head reveal">
+          <span class="eyebrow">Experience</span>
+          <h2 class="section-title">Where I've worked</h2>
+          <p class="section-sub">6+ years designing and building web applications in the .NET ecosystem.</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item current reveal">
+            <div class="timeline-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4.5v9L12 20l-8-4.5v-9z"/><path d="M12 11l8-4.5M12 11v9M12 11L4 6.5"/></svg>
+            </div>
+            <div class="card timeline-card">
+              <div class="timeline-head">
+                <h3>Deputy Manager, Software Development (MIS)</h3>
+                <span class="timeline-period">May 2019 — Present</span>
+              </div>
+              <div class="timeline-org">Amin Mohammad Group · Satmasjid Road, Dhaka</div>
+              <ul>
+                <li>Design and develop application features using C#, ASP.NET MVC 5, SQL Server, VBScript, ASP, JavaScript, jQuery and AJAX.</li>
+                <li>Own database design and coding architecture, following consistent principles across sub-systems.</li>
+                <li>Work directly with project managers, clients and other departments to refine requirements as projects evolve.</li>
+                <li>Apply UI best practices for responsive, user-friendly and visually polished interfaces.</li>
+                <li>Coordinate user acceptance and rollout after each sub-system is developed.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal d1">
+            <div class="timeline-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+            </div>
+            <div class="card timeline-card">
+              <div class="timeline-head">
+                <h3>Jr. Software Engineer</h3>
+                <span class="timeline-period">Nov 2018 — May 2019</span>
+              </div>
+              <div class="timeline-org">Cure Point · Banani, Dhaka</div>
+              <ul>
+                <li>Built application features with C#, ASP.NET MVC, SQL Server, LINQ, Bootstrap, HTML5, CSS3, JavaScript, jQuery and AJAX.</li>
+                <li>Maintained sound database design and coding architecture across the codebase.</li>
+                <li>Followed UI best practices for responsiveness and usability.</li>
+                <li>Supported user onboarding after each sub-system went live.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="alt">
+      <div class="container">
+        <div class="head reveal">
+          <span class="eyebrow">Education</span>
+          <h2 class="section-title">Academic background</h2>
+          <p class="section-sub">Formal education alongside hands-on professional training.</p>
+        </div>
+
+        <div class="edu-grid">
+          <div class="card edu-card reveal">
+            <div class="edu-top">
+              <div>
+                <div class="edu-degree">M.Sc. in Computer Science</div>
+                <div class="edu-major">Computer Science &amp; Engineering</div>
+              </div>
+            </div>
+            <div>
+              <div class="edu-school">Jahangirnagar University</div>
+            </div>
+          </div>
+
+          <div class="card edu-card reveal d1">
+            <div class="edu-top">
+              <div>
+                <div class="edu-degree">B.Sc. in CSE</div>
+                <div class="edu-major">Computer Science &amp; Engineering</div>
+              </div>
+            </div>
+            <div>
+              <div class="edu-school">Daffodil International University</div>
+            </div>
+          </div>
+
+          <div class="card edu-card reveal d2">
+            <div class="edu-top">
+              <div>
+                <div class="edu-degree">Diploma in Engineering</div>
+                <div class="edu-major">Computer Technology</div>
+              </div>
+            </div>
+            <div>
+              <div class="edu-school">Barisal Polytechnic Institute</div>
+            </div>
+          </div>
+
+          <div class="card edu-card reveal d3">
+            <div class="edu-top">
+              <div>
+                <div class="edu-degree">S.S.C.</div>
+                <div class="edu-major">Science</div>
+              </div>
+            </div>
+            <div>
+              <div class="edu-school">Barisal Board</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="training-list">
+          <div class="head-sub reveal">Professional Training</div>
+          <div class="training-grid">
+            <div class="card training-card reveal">
+              <h4>Web App Development — .NET</h4>
+              <div class="t-org">BASIS Institute of Technology &amp; Management (BITM)</div>
+              <div class="t-meta">3 months</div>
+              <div class="tags"><span class="tag">C#</span><span class="tag">OOP</span><span class="tag">SQL</span><span class="tag">LINQ</span><span class="tag">ASP.NET MVC</span></div>
+            </div>
+
+            <div class="card training-card reveal d1">
+              <h4>Web Design &amp; Development</h4>
+              <div class="t-org">BDJobs Training</div>
+              <div class="t-meta">3 months</div>
+              <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">PHP</span><span class="tag">SQL</span><span class="tag">jQuery</span></div>
+            </div>
+
+            <div class="card training-card reveal d2">
+              <h4>Networking with Server 2008</h4>
+              <div class="t-org">Blooming Bird Information Technology</div>
+              <div class="t-meta">3 months</div>
+              <div class="tags"><span class="tag">LAN/MAN/WAN</span><span class="tag">DNS</span><span class="tag">DHCP</span><span class="tag">Cabling</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -520,7 +719,7 @@
         <div class="contact reveal">
           <span class="eyebrow">Contact</span>
           <h2 class="section-title">Let's build something together</h2>
-          <p>Have a website or software project in mind? Email or call me directly, or find me on LinkedIn and GitHub. I'm also open to remote opportunities.</p>
+          <p>Have a website or software project in mind? Email or call me directly, or find me on LinkedIn and GitHub. I'm open to remote, part-time and freelance work.</p>
           <div class="cta">
             <a class="btn btn-primary" href="mailto:raselhowlader.me@gmail.com">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
